@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react'
 import { SegmentedControl } from '@mantine/core'
 import { useNavigate } from 'react-router-dom'
@@ -33,11 +32,8 @@ function Pricing() {
 
       try {
         const response = await fetch(`${API_URL}/my-plan`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         })
-
         const data = await response.json()
 
         if (response.status === 401) {
@@ -47,9 +43,7 @@ function Pricing() {
           return
         }
 
-        if (!response.ok) {
-          throw new Error(data.message || 'Could not load your plan.')
-        }
+        if (!response.ok) throw new Error(data.message || 'Could not load your plan.')
 
         setUserPlan(data.plan || 'Free')
       } catch (err) {
@@ -78,11 +72,8 @@ function Pricing() {
       setError('')
 
       const response = await fetch(`${API_URL}/my-plan`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       })
-
       const data = await response.json()
 
       if (response.status === 401) {
@@ -92,9 +83,7 @@ function Pricing() {
         throw new Error('Your session has expired. Please login again.')
       }
 
-      if (!response.ok) {
-        throw new Error(data.message || 'Could not check your plan.')
-      }
+      if (!response.ok) throw new Error(data.message || 'Could not check your plan.')
 
       setUserPlan(data.plan || 'Free')
 
@@ -128,16 +117,9 @@ function Pricing() {
 
       const response = await fetch(`${API_URL}/upgrade`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          planType: selectedPlan.planType,
-          billingPeriod: selectedPlan.billingPeriod,
-        }),
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ planType: selectedPlan.planType, billingPeriod: selectedPlan.billingPeriod }),
       })
-
       const data = await response.json()
 
       if (response.status === 401) {
@@ -147,26 +129,19 @@ function Pricing() {
         throw new Error('Your session has expired. Please login again.')
       }
 
-      if (!response.ok) {
-        throw new Error(data.message || 'Upgrade failed.')
-      }
+      if (!response.ok) throw new Error(data.message || 'Upgrade failed.')
 
       setUserPlan('Paid')
       setSelectedPlan(null)
 
-      const savedUser = JSON.parse(
-        localStorage.getItem('user') || '{}'
-      )
+      const savedUser = JSON.parse(localStorage.getItem('user') || '{}')
 
-      localStorage.setItem(
-        'user',
-        JSON.stringify({
-          ...savedUser,
-          plan: 'Paid',
-          planType: selectedPlan.planType,
-          billingPeriod: selectedPlan.billingPeriod,
-        })
-      )
+      localStorage.setItem('user', JSON.stringify({
+        ...savedUser,
+        plan: 'Paid',
+        planType: selectedPlan.planType,
+        billingPeriod: selectedPlan.billingPeriod,
+      }))
 
       toast.success('Your plan has been upgraded successfully.')
     } catch (err) {
@@ -178,12 +153,11 @@ function Pricing() {
     }
   }
 
-  const pricingComponent =
-    billing === 'monthly' ? (
-      <Monthly onUpgrade={checkUserPlan} />
-    ) : (
-      <Yearly onUpgrade={checkUserPlan} />
-    )
+  const pricingComponent = billing === 'monthly' ? (
+    <Monthly onUpgrade={checkUserPlan} />
+  ) : (
+    <Yearly onUpgrade={checkUserPlan} />
+  )
 
   return (
     <div className="pricing-page">
@@ -191,9 +165,7 @@ function Pricing() {
 
       {userPlan === 'Paid' ? (
         <>
-          <p className="pricing-subtitle">
-            You are currently subscribed to a Paid plan.
-          </p>
+          <p className="pricing-subtitle">You are currently subscribed to a Paid plan.</p>
 
           {planLoaded && (
             <div className="current-plan-message">
@@ -204,25 +176,16 @@ function Pricing() {
         </>
       ) : (
         <>
-          <p className="pricing-subtitle">
-            Choose the plan that works best for you.
-          </p>
+          <p className="pricing-subtitle">Choose the plan that works best for you.</p>
 
           <SegmentedControl
             className="billing-toggle"
             value={billing}
             onChange={setBilling}
-            data={[
-              { label: 'Monthly', value: 'monthly' },
-              { label: 'Yearly', value: 'yearly' },
-            ]}
+            data={[{ label: 'Monthly', value: 'monthly' }, { label: 'Yearly', value: 'yearly' }]}
           />
 
-          {!planLoaded ? (
-            <p>Checking your current plan...</p>
-          ) : (
-            pricingComponent
-          )}
+          {!planLoaded ? <p>Checking your current plan...</p> : pricingComponent}
         </>
       )}
 
@@ -246,5 +209,6 @@ function Pricing() {
 }
 
 export default Pricing
+
 
 

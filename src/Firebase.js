@@ -71,52 +71,24 @@ export async function createUserDocumentFromAuth(
 }
 
 // Create account with email and password
-export const createAuthUserWithEmailAndPassword = async (
-  email,
-  password
-) => {
+export const createAuthUserWithEmailAndPassword = async (email,password) => {
   if (!email || !password) return
-
-  return await createUserWithEmailAndPassword(
-    auth,
-    email,
-    password
-  )
+  return await createUserWithEmailAndPassword(auth,email,password)
 }
 
 // Sign up and save full name in Firebase and Firestore
-export const signUpWithEmailAndPassword = async (
-  fullName,
-  email,
-  password
-) => {
-  const result = await createAuthUserWithEmailAndPassword(
-    email,
-    password
-  )
+export const signUpWithEmailAndPassword = async (fullName,email,password) => {
+  const result = await createAuthUserWithEmailAndPassword( email,password)
 
   if (!result) return
-
   await updateProfile(result.user, {
     displayName: fullName,
   })
-
   await createUserDocumentFromAuth(result.user, fullName)
-
   return result
 }
-
 // Login with email and password
-export const signinAuthUserWithEmailAndPassword = async (
-  email,
-  password
-) => {
+export const signinAuthUserWithEmailAndPassword = async (email,password) => {
   if (!email || !password) return
-
-  return await signInWithEmailAndPassword(
-    auth,
-    email,
-    password
-  )
-}
+  return await signInWithEmailAndPassword(auth,email,password)}
 

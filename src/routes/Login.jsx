@@ -13,12 +13,10 @@ function Login() {
   const [loading, setLoading] = useState(false)
 
   const navigate = useNavigate()
-
   // Email and password login
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
-
     try {
       setLoading(true)
 

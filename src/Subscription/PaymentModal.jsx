@@ -1,14 +1,7 @@
 import './PaymentModal.css'
 import { useState } from 'react'
 
-function PaymentModal({
-  planType,
-  billingPeriod,
-  onClose,
-  onConfirm,
-  loading,
-  error,
-}) {
+function PaymentModal({planType,billingPeriod,onClose,onConfirm,loading,error,}) {
   const [cardholder, setCardholder] = useState('')
   const [cardNumber, setCardNumber] = useState('')
   const [expiry, setExpiry] = useState('')
