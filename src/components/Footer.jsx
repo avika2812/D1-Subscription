@@ -20,7 +20,7 @@ function Footer() {
     setMessage('')
 
     try {
-      const response = await fetch('http://localhost:8080/', {
+      fetch(`${import.meta.env.VITE_API_URL}/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
