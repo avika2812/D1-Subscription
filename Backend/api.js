@@ -14,8 +14,9 @@ const { getAuth } = require('firebase-admin/auth')
 require('dotenv').config()
 
 // Firebase Admin setup
-const serviceAccountPath = path.join(__dirname, '.serviceAccountKey.json')
-const serviceAccount = require(serviceAccountPath)
+const serviceAccount = JSON.parse(
+  process.env.FIREBASE_SERVICE_ACCOUNT
+)
 
 if (getApps().length === 0) {
   initializeApp({
