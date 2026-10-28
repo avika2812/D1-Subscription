@@ -20,30 +20,35 @@ function Footer() {
     setMessage('')
 
     try {
-      fetch(`${import.meta.env.VITE_API_URL}/`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: new URLSearchParams({
-          email: email.trim()
-        })
-      })
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: new URLSearchParams({
+            email: email.trim(),
+          }),
+        }
+      )
 
       const result = await response.text()
 
       if (response.ok) {
-  Swal.fire({
-  title: 'Subscribed!',
-  text: 'Welcome to the DEV@Deakin community!',
-  icon: 'success',
-  confirmButtonText: 'Great!'
-})
-  setEmail('')
-} else {
-  toast.error(result || 'Subscription failed. Please try again.')
-}
+        await Swal.fire({
+          title: 'Subscribed!',
+          text: 'Welcome to the DEV@Deakin community!',
+          icon: 'success',
+          confirmButtonText: 'Great!',
+        })
+
+        setEmail('')
+      } else {
+        toast.error(result || 'Subscription failed. Please try again.')
+      }
     } catch (error) {
+      console.error('Subscription error:', error)
       toast.error('Unable to connect to the server.')
     } finally {
       setLoading(false)
