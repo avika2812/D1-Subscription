@@ -73,6 +73,10 @@ function Navigation() {
           Post
         </Link>
 
+        <Link to="/browse-posts" className="nav-link">
+  Browse Posts
+</Link>
+
         <Link to="/pricing" className="nav-link">
           Pricing
         </Link>

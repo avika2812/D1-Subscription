@@ -6,6 +6,7 @@ import Login from './routes/Login'
 import SignUp from './routes/SignUp'
 import Post from './Post/Post'
 import Pricing from './Subscription/Pricing'
+import BrowsePosts from './routes/BrowsePosts'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -18,6 +19,7 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="post" element={<Post />} />
+        <Route path="browse-posts" element={<BrowsePosts />} />
         <Route path="pricing" element={<Pricing/>}/>
       </Route>
     </Routes>
